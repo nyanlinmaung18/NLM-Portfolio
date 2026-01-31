@@ -3,150 +3,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Backend Developer & Creative Specialist</title>
+    <title>Nyan Lin Maung | Software Engineer & Tech Consultant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* Modern, Clean "Tech" Look for DTV */
+        /* --- CSS VARIABLES --- */
         :root {
-            --primary: #2563eb; /* Professional Blue */
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --text: #334155;
+            --primary: #2563eb;       
+            --bg-body: #f8fafc;       
+            --bg-card: #ffffff;       
+            --text-main: #0f172a;     
+            --text-sub: #475569;      
+            --border: #e2e8f0;        
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
+        body.dark-mode {
+            --primary: #60a5fa;       
+            --bg-body: #0f172a;       
+            --bg-card: #1e293b;       
+            --text-main: #f1f5f9;     
+            --text-sub: #94a3b8;      
+            --border: #334155;        
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- GLOBAL STYLES --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            color: var(--text);
+            color: var(--text-main);
+            background-color: var(--bg-body);
             margin: 0;
             padding: 0;
-            background-color: var(--light);
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        header {
-            background: var(--dark);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
+        /* --- NAVIGATION --- */
+        nav {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+            padding: 1rem 0;
+        }
+        .nav-container {
+            max-width: 900px; margin: 0 auto; padding: 0 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-main); text-decoration: none; margin-left: 1.5rem;
+            font-weight: 500; font-size: 0.95rem; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+        
+        #theme-toggle {
+            background: none; border: 1px solid var(--border); color: var(--text-main);
+            padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;
+            margin-left: 1rem; font-size: 0.9rem;
         }
 
-        h1 { margin: 0; font-size: 2.5rem; }
-        p.subtitle { color: #94a3b8; font-size: 1.2rem; margin-top: 0.5rem; }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+        /* --- SECTIONS --- */
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+        
+        header { text-align: center; padding: 3rem 1rem 2rem 1rem; }
+        
+        /* PROFILE PHOTO STYLE */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-card);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
         }
 
+        h1 { margin: 0; font-size: 2.5rem; color: var(--text-main); letter-spacing: -1px; }
+        p.subtitle { color: var(--text-sub); font-size: 1.25rem; margin-top: 0.75rem; font-weight: 300; }
+        
         .section {
-            background: white;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: var(--bg-card); padding: 2.5rem; margin-bottom: 2rem;
+            border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow);
+            scroll-margin-top: 100px;
+        }
+        h2 { margin-top: 0; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 0.5rem; color: var(--text-main); }
+
+        /* --- SKILLS GRID --- */
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+        .skill-tag {
+            background: var(--bg-body); border: 1px solid var(--border);
+            color: var(--text-main); padding: 0.5rem 1rem; border-radius: 6px;
+            font-size: 0.9rem; font-weight: 500;
         }
 
-        h2 { border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; color: var(--dark); }
+        /* --- TIMELINE (ROADMAP) FIXED --- */
+        .timeline { position: relative; margin-top: 1rem; padding: 2rem 0; }
+        .timeline::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0; width: 2px; background: var(--border); }
+        
+        .timeline-item { position: relative; width: calc(50% - 60px); padding: 0; box-sizing: border-box; }
+        
+        /* Left Item Positioning */
+        .timeline-item.left { left: 0; margin-right: auto; text-align: left; }
+        
+        /* Right Item Positioning */
+        .timeline-item.right { left: 50%; text-align: left; padding-left: 50px; }
+        
+        /* The Date Pill */
+        .date-pill { display: inline-block; background: var(--primary); color: #fff; padding: 0.45rem 0.9rem; border-radius: 999px; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        
+        /* --- DOT FIX START --- */
+        .timeline-item .dot { 
+            position: absolute; 
+            width: 14px; height: 14px; 
+            border-radius: 50%; 
+            background: var(--primary); 
+            box-shadow: 0 0 0 4px var(--bg-card); 
+            z-index: 2; 
+            top: 18px; /* Aligns with top of content/pill */
+        }
 
+        /* Dot for Left Items (Pushes to center line) */
+        .timeline-item.left .dot {
+            right: -67px; /* 60px gap + 7px half-dot width */
+        }
+
+        /* Dot for Right Items (Pushes to center line) */
+        .timeline-item.right .dot {
+            left: -7px; /* Pulls back half-dot width to sit on line */
+        }
+        /* --- DOT FIX END --- */
+
+        .timeline-item .content { display: block; background: var(--bg-card); padding: 1rem; border-radius: 8px; border: 1px solid var(--border); width: 100%; box-sizing: border-box; }
+        .timeline-item h4 { margin: 0 0 0.25rem 0; color: var(--text-main); font-size: 1rem; }
+        .timeline-item .meta { margin: 0; font-weight: 600; color: var(--primary); font-size: 0.9rem; }
+        .timeline-item .location { color: var(--text-sub); font-size: 0.85rem; margin: 0.25rem 0 0; }
+
+        /* --- MOBILE TIMELINE FIXES --- */
+        @media (max-width: 800px) {
+            .timeline::before { left: 20px; transform: none; } 
+            
+            .timeline-item, .timeline-item.left, .timeline-item.right { 
+                width: 100%; 
+                left: 0; 
+                text-align: left; 
+                margin-left: 0; 
+                padding-left: 50px; 
+                margin-bottom: 2rem;
+            }
+            
+            /* Reset Dot for Mobile */
+            .timeline-item .dot, .timeline-item.left .dot, .timeline-item.right .dot {
+                left: 13px; /* Center on the 20px line */
+                right: auto;
+            }
+            
+            .date-pill { margin: 0 0 0.5rem 0; }
+        }
+
+        /* --- EDUCATION STYLES --- */
+        .edu-container {
+            display: flex; gap: 2rem; align-items: center; margin-top: 1.5rem; flex-wrap: wrap;
+        }
+        .edu-text { flex: 1; }
+        .grad-img {
+            width: 200px; height: 200px; object-fit: cover;
+            border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow);
+        }
+
+        /* --- PROJECTS GRID --- */
         .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;
         }
-
         .project-card {
-            border: 1px solid #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 6px;
+            border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;
+            background-color: var(--bg-body); transition: transform 0.2s;
         }
-
-        .project-card h3 { margin-top: 0; color: var(--primary); }
-
-        .badge {
-            display: inline-block;
-            background: #e0f2fe;
-            color: #0369a1;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-right: 0.5rem;
-        }
+        .project-card:hover { transform: translateY(-2px); }
+        .project-card h3 { margin-top: 0; color: var(--primary); margin-bottom: 0.5rem;}
+        .project-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 1rem; display: block; }
 
         .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 1rem;
+            display: inline-block; background: var(--primary); color: white;
+            padding: 0.75rem 2rem; text-decoration: none; border-radius: 6px;
+            margin-top: 1rem; font-weight: 600; text-align: center;
         }
+        .btn:hover { opacity: 0.9; }
 
-        footer { text-align: center; padding: 2rem; color: #64748b; font-size: 0.9rem; }
+        .contact-list a { color: var(--primary); text-decoration: none; }
+        .contact-list a:hover { text-decoration: underline; }
+
+        footer { text-align: center; padding: 3rem; color: var(--text-sub); font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Nyan Lin Maung</h1>
-        <p class="subtitle">Backend Developer | C# & API Specialist | Content Strategist</p>
-    </header>
+    <nav>
+        <div class="nav-container">
+            <div style="font-weight: 700; font-size: 1.2rem;">Portfolio</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">Skills</a>   
+                <a href="#projects">Work</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+                <button id="theme-toggle">🌙</button>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <div class="section">
-            <h2>Professional Profile</h2>
+        
+        <header id="home">
+            <img src="images/profile.jpg" alt="Nyan Lin Maung" class="profile-img">
+            <h1>Nyan Lin Maung</h1>
+            <p class="subtitle">Senior Software Engineer & Cloud Architect</p>
+        </header>
+
+        <div id="about" class="section">
+            <h2>Profile</h2>
             <p>
-                I am a backend-focused developer and creative specialist with expertise in building robust APIs and managing digital content. 
-                Currently specializing in <strong>C#</strong> and expanding into <strong>Flutter</strong> mobile architecture.
+                I am a Back-End Developer with over 5 years of professional experience, including 1 year developing custom
+                modules for a civil engineering estimating software and 4+ years in web development, specializing in online
+                booking, real estate, and property management platforms. I focus on designing scalable, reliable, and user-focused
+                systems, applying best practices in OOP, SOLID principles, and SaaS architecture.
+                <br><br>
+                I worked at a BOI company in Thailand as a Back-End Developer, delivering platforms that empower thousands of
+                users and agents. I have hands-on experience with API integrations, payment gateways (Omise, 2C2P), cloud
+                deployment, and automated document generation.
             </p>
-            <p>
-                My work bridges the gap between technical infrastructure and creative content strategies for travel and business platforms.
-            </p>
+            
+            <div class="timeline" aria-label="Career roadmap">
+                
+                <div class="timeline-item left">
+                    <span class="dot"></span>
+                    <div class="date-pill">Aug 2022 – Jan 2026</div>
+                    <div class="content">
+                        <h4>Back-End Developer</h4>
+                        <p class="meta"><img src="logos/properdee.png" alt="Company Logo" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 8px;">ProperDee Company Limited</p>
+                        <p class="location">Bangkok, Thailand</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item right">
+                    <span class="dot"></span>
+                    <div class="date-pill">Mar 2021 – May 2022</div>
+                    <div class="content">
+                        <h4>Freelance Web Developer</h4>
+                        <p class="meta">Self-employed</p>
+                        <p class="location">Yangon, Myanmar</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item left">
+                    <span class="dot"></span>
+                    <div class="date-pill">Jan 2020 – Jan 2021</div>
+                    <div class="content">
+                        <h4>Software Engineer</h4>
+                        <p class="meta"><img src="logos/being-myanmar.png" alt="Company Logo" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 8px;">Being Myanmar Company Limited</p>
+                        <p class="location">Yangon, Myanmar</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item right">
+                    <span class="dot"></span>
+                    <div class="date-pill">May 2020 – Aug 2020</div>
+                    <div class="content">
+                        <h4>Business Consultant (Internship)</h4>
+                        <p class="meta"><img src="logos/nexus.png" alt="Company Logo" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 8px;">Nexus Myanmar Company Limited</p>
+                        <p class="location">Yangon, Myanmar</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Technical Stack</h3>
+            <div class="skills-grid">
+                <strong style="width:100%; color:var(--text-main); margin-bottom:0.5rem;">Programming Languages</strong>
+                <span class="skill-tag">C#</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">PHP</span>
+                <span class="skill-tag">Delphi</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+
+                <strong style="width:100%; color:var(--text-main); margin-top:0.5rem; margin-bottom:0.5rem;">Cloud & DevOps</strong>
+                <span class="skill-tag">Microsoft Azure</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">Cloudflare</span>
+                <span class="skill-tag">Dynadot</span>
+
+                <strong style="width:100%; color:var(--text-main); margin-top:0.5rem; margin-bottom:0.5rem;">Frameworks</strong>
+                <span class="skill-tag">ASP.NET</span>
+                <span class="skill-tag">Node.js</span>
+
+                <strong style="width:100%; color:var(--text-main); margin-top:0.5rem; margin-bottom:0.5rem;">Databases</strong>
+                <span class="skill-tag">MySQL</span>
+                <span class="skill-tag">MongoDB</span>
+            </div>
         </div>
 
-        <div class="section">
+        <div id="projects" class="section">
             <h2>Selected Projects</h2>
+            <p style="color: var(--text-sub); margin-bottom: 1.5rem;">
+                A selection of platforms I have architected and developed.
+            </p>
             <div class="project-grid">
                 
                 <div class="project-card">
-                    <h3>Travel Service API</h3>
-                    <div>
-                        <span class="badge">C#</span>
-                        <span class="badge">Backend</span>
-                        <span class="badge">API</span>
-                    </div>
+                    <h3>Online Travel Booking Engine</h3>
+                    <span class="project-meta">Architecture / API Integration / Payment Security</span>
                     <p>
-                        Designed and implemented the backend architecture for a travel booking platform. 
-                        Handled data processing for visa requirements and customer inquiries.
+                        Developed white-label hotel booking websites integrating <strong>Traveloka and Agoda APIs</strong>.
+                        Built secure booking workflows with automated email notifications and 
+                        <strong>Omise payment gateway</strong> integration.
+                    </p>
+                </div>
+
+                <div class="project-card">
+                    <h3>ProperDee SaaS Platform</h3>
+                    <span class="project-meta">Full Stack / System Design</span>
+                    <p>
+                        Built a dual-site ecosystem: a public marketplace and an agent portal.
+                        Features include personalized subdomain websites for agents and 
+                        <strong>2C2P payment integration</strong>.
                     </p>
                 </div>
 
                 <div class="project-card">
                     <h3>Paris Travel Service</h3>
-                    <div>
-                        <span class="badge">Content Strategy</span>
-                        <span class="badge">Graphic Design</span>
-                    </div>
+                    <span class="project-meta">Founder / Content Strategy / Web Dev</span>
                     <p>
-                        Manage digital presence and creative assets for <a href="https://www.paristravelservice.com">paristravelservice.com</a>.
-                        Created high-engagement social media campaigns targeting visa applicants.
+                        A dedicated travel service platform for visa and travel assistance. 
+                        Combines technical web infrastructure with targeted content strategies.
                     </p>
                 </div>
 
             </div>
         </div>
 
-        <div class="section">
+        <div id="education" class="section">
+            <h2>Education</h2>
+            <div class="edu-container">
+                <div class="edu-text">
+                    <h3 style="margin-top: 0; color: var(--primary);">Bachelor of Computer Science</h3>
+                    <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom: 0;">
+                        <img src="images/uni-logo.png" alt="University Logo" style="width:48px; height:48px; object-fit:contain; border-radius:6px;">
+                        <div>
+                            <p style="font-weight: 600; margin: 0;">University Of Computer Studies, Yangon</p>
+                            <p style="margin: 0; color: var(--text-sub); font-size: 0.9rem;">Graduated: 2020</p>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-sub); font-size: 0.9rem; margin-top: 0.5rem;">
+                        Specialized in Software Engineering and Computer Systems.
+                    </p>
+                </div>
+                <img src="images/gratuated.jpg" alt="Graduation Photo" class="grad-img">
+            </div>
+        </div>
+
+        <div id="contact" class="section">
             <h2>Contact</h2>
-            <p>Open for freelance backend development and content strategy contracts.</p>
-            <a href="mailto:your.email@example.com" class="btn">Get in Touch</a>
+            <p>Available for advanced backend development and technical consultation.</p>
+            <ul class="contact-list" style="list-style: none; padding: 0; color: var(--text-sub);">
+                <li style="margin-bottom: 0.5rem;">
+                    <i class="fa-solid fa-envelope" style="color:var(--primary); margin-right:0.5rem;" aria-hidden="true"></i>
+                    <a href="mailto:nyanlinmaung.dev@gmail.com">nyanlinmaung.dev@gmail.com</a>
+                </li>
+                <li style="margin-bottom: 0.5rem;">
+                    <i class="fa-solid fa-phone" style="color:var(--primary); margin-right:0.5rem;" aria-hidden="true"></i>
+                    <a href="tel:+66814425400">+66 81 442 5400</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-location-dot" style="color:var(--primary); margin-right:0.5rem;" aria-hidden="true"></i>
+                    Bangkok, Thailand
+                </li>
+            </ul>
+            <a href="https://www.linkedin.com/in/nyanlinmaung/" class="btn" target="_blank" rel="noopener noreferrer" style="margin-top:0.75rem; display:inline-block;">
+                <i class="fa-brands fa-linkedin" style="margin-right:0.5rem;" aria-hidden="true"></i>Visit LinkedIn
+            </a>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 [Your Name]. Hosted on Vercel.</p>
+        <p>&copy; <span id="year"></span> Nyan Lin Maung. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const toggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            toggleButton.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            toggleButton.textContent = theme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Set Current Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 
 </body>
 </html>
