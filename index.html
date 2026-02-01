@@ -75,7 +75,10 @@
             border: 4px solid var(--bg-card);
             box-shadow: var(--shadow);
             margin-bottom: 1.5rem;
+            cursor: pointer; /* clickable */
+            transition: transform 0.12s ease; /* subtle feedback */
         }
+        .profile-img:hover { transform: scale(1.03); }
 
         h1 { margin: 0; font-size: 2.5rem; color: var(--text-main); letter-spacing: -1px; }
         p.subtitle { color: var(--text-sub); font-size: 1.25rem; margin-top: 0.75rem; font-weight: 300; }
@@ -93,6 +96,16 @@
             background: var(--bg-body); border: 1px solid var(--border);
             color: var(--text-main); padding: 0.5rem 1rem; border-radius: 6px;
             font-size: 0.9rem; font-weight: 500;
+        }
+
+        /* Flag icon for language tags */
+        .skill-tag img.flag {
+            width: 18px;
+            height: 12px;
+            object-fit: cover;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            border-radius: 2px;
         }
 
         /* --- TIMELINE (ROADMAP) FIXED --- */
@@ -167,32 +180,152 @@
         .grad-img {
             width: 200px; height: 200px; object-fit: cover;
             border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow);
+            cursor: pointer; /* clickable */
+            transition: transform 0.12s ease; /* subtle feedback */
         }
+        .grad-img:hover { transform: scale(1.03); }
 
         /* --- PROJECTS GRID --- */
         .project-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;
         }
         .project-card {
-            border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px;
-            background-color: var(--bg-body); transition: transform 0.2s;
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack children vertically */
+            justify-content: space-between; /* Space out content */
+            border: 1px solid var(--border); 
+            padding: 1.5rem; 
+            border-radius: 8px;
+            background-color: var(--bg-body); 
+            transition: transform 0.2s;
         }
+
+        .project-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+
         .project-card:hover { transform: translateY(-2px); }
         .project-card h3 { margin-top: 0; color: var(--primary); margin-bottom: 0.5rem;}
         .project-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 1rem; display: block; }
 
         .btn {
-            display: inline-block; background: var(--primary); color: white;
-            padding: 0.75rem 2rem; text-decoration: none; border-radius: 6px;
-            margin-top: 1rem; font-weight: 600; text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(45deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 0.4rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            border: none;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            transition: all 0.18s ease;
+            min-width: 120px;
+            height: 26px;
         }
-        .btn:hover { opacity: 0.9; }
+
+        /* Secondary button variant */
+        .btn.btn-secondary {
+            background: linear-gradient(45deg, #7c3aed, #6366f1);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.12);
+            opacity: 1;
+        }
+
+        /* Project actions container to align buttons */
+        .project-actions {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 420px) {
+            .project-actions { flex-direction: column; align-items: stretch; }
+            .project-actions .btn { width: 100%; min-width: 0; }
+            .project-card .stacked-thumbs { margin-right: 0; margin-bottom: 0.6rem; }
+        }
+
+        /* Add spacing between thumbnails and action buttons */
+        .project-card .stacked-thumbs { margin-right: 2.5rem; padding-right: 0; }
+
+        .btn-link i {
+            margin-right: 0.5rem;
+        }
 
         .contact-list a { color: var(--primary); text-decoration: none; }
         .contact-list a:hover { text-decoration: underline; }
 
-        footer { text-align: center; padding: 3rem; color: var(--text-sub); font-size: 0.9rem; }
-    </style>
+        footer {
+            text-align: center;
+            padding: 0.1rem 0; /* further reduced vertical padding */
+            margin: 0.1rem 0; /* further reduced top/bottom margin */
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        /* --- GALLERY/MODAL --- */
+        .proj-thumb-preview { 
+            width: 120px; 
+            height: 80px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            border: 1px solid var(--border); 
+            cursor: pointer; 
+            box-shadow: var(--shadow); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+        .proj-thumb-preview:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Collapsed stacked thumbnails (Properlly) */
+        .stacked-thumbs { width: 140px; height: 96px; position: relative; display: inline-block; }
+        .stacked-thumb { position: absolute; width: 110px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow); transition: transform 0.18s, box-shadow 0.18s, z-index 0.18s; cursor: pointer; }
+        .stacked-thumb:nth-child(1) { left: 0px; top: 10px; transform: rotate(-12deg); z-index: 1; }
+        .stacked-thumb:nth-child(2) { left: 18px; top: 2px; transform: rotate(8deg); z-index: 2; }
+        .stacked-thumb:nth-child(3) { left: 36px; top: -6px; transform: rotate(-4deg); z-index: 3; }
+        .stacked-thumb:hover { transform: translateY(-8px) scale(1.04) rotate(0deg); z-index: 20; box-shadow: 0 10px 20px rgba(0,0,0,0.18); }
+        @media (max-width: 600px) {
+            .stacked-thumbs { width: 96px; height: 68px; }
+            .stacked-thumb { width: 72px; height: 48px; }
+            .stacked-thumb:nth-child(1) { left: 0px; top: 6px; transform: rotate(-8deg); }
+            .stacked-thumb:nth-child(2) { left: 12px; top: 0px; transform: rotate(6deg); }
+            .stacked-thumb:nth-child(3) { left: 24px; top: -6px; transform: rotate(-3deg); }
+        }
+
+        .gallery-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1200; }
+        .gallery-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+        .gallery-content { position: relative; max-width: 900px; width: 95%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; box-shadow: var(--shadow); z-index: 10; display: flex; flex-direction: column; align-items: center; }
+        .gallery-main { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); }
+
+
+
+        .gallery-thumbs { display:flex; gap:0.5rem; margin-top:0.75rem; }
+        .gallery-thumb { width: 96px; height: 64px; object-fit: cover; border-radius:6px; border:2px solid transparent; cursor:pointer; opacity:0.9; }
+        .gallery-thumb.thumb-active { border-color: var(--primary); opacity:1; }
+        .close-btn { position: absolute; right: 10px; top: 8px; background: transparent; border: none; font-size: 1.75rem; cursor: pointer; color: var(--text-sub); }
+        .gallery-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; padding: 0.5rem 0.75rem; font-size: 1.25rem; cursor: pointer; border-radius: 6px; }
+        .gallery-nav.prev { left: 8px; }
+        .gallery-nav.next { right: 8px; }
+
+        @media (max-width: 600px) {
+            .gallery-thumb { width: 72px; height: 48px; }
+        }
+    </style>"
 </head>
 <body>
 
@@ -202,7 +335,7 @@
             <div class="nav-links">
                 <a href="#home">Home</a>
                 <a href="#about">Skills</a>   
-                <a href="#projects">Work</a>
+                <a href="#projects">Projects</a>
                 <a href="#education">Education</a>
                 <a href="#contact">Contact</a>
                 <button id="theme-toggle">🌙</button>
@@ -235,7 +368,17 @@
                 
                 <div class="timeline-item left">
                     <span class="dot"></span>
-                    <div class="date-pill">Aug 2022 – Jan 2026</div>
+                    <div class="date-pill">March 2026 – Present</div>
+                    <div class="content">
+                        <h4>Senior Web Developer</h4>
+                        <p class="meta"><img src="logos/paris-travel-tech.png" alt="Company Logo" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 8px;">Paris Travel Tech Company Limited</p>
+                        <p class="location">Yangon, Myanmar</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item right">
+                    <span class="dot"></span>
+                    <div class="date-pill">Aug 2022 – Feb 2026</div>
                     <div class="content">
                         <h4>Back-End Developer</h4>
                         <p class="meta"><img src="logos/properdee.png" alt="Company Logo" style="width: 30px; height: 30px; vertical-align: middle; margin-right: 8px;">ProperDee Company Limited</p>
@@ -243,7 +386,7 @@
                     </div>
                 </div>
 
-                <div class="timeline-item right">
+                <div class="timeline-item left">
                     <span class="dot"></span>
                     <div class="date-pill">Mar 2021 – May 2022</div>
                     <div class="content">
@@ -253,7 +396,7 @@
                     </div>
                 </div>
 
-                <div class="timeline-item left">
+                <div class="timeline-item right">
                     <span class="dot"></span>
                     <div class="date-pill">Jan 2020 – Jan 2021</div>
                     <div class="content">
@@ -263,7 +406,7 @@
                     </div>
                 </div>
 
-                <div class="timeline-item right">
+                <div class="timeline-item left">
                     <span class="dot"></span>
                     <div class="date-pill">May 2020 – Aug 2020</div>
                     <div class="content">
@@ -304,39 +447,99 @@
         </div>
 
         <div id="projects" class="section">
-            <h2>Selected Projects</h2>
+            <h2>Projects</h2>
             <p style="color: var(--text-sub); margin-bottom: 1.5rem;">
                 A selection of platforms I have architected and developed.
             </p>
             <div class="project-grid">
                 
-                <div class="project-card">
-                    <h3>Online Travel Booking Engine</h3>
-                    <span class="project-meta">Architecture / API Integration / Payment Security</span>
-                    <p>
-                        Developed white-label hotel booking websites integrating <strong>Traveloka and Agoda APIs</strong>.
-                        Built secure booking workflows with automated email notifications and 
-                        <strong>Omise payment gateway</strong> integration.
-                    </p>
+                <div class="project-card" id="proj-properlly">
+                    <div>
+                        <h3>Properlly</h3>
+                        <span class="project-meta">SaaS-style property management platform</span>
+                        <p style="margin-top:0.5rem; color:var(--text-sub);">
+                            Developed a SaaS-style system enabling agents, owners, and tenants to manage listings, communicate via chat, repairs/maintenance, generate contracts, and customize subdomain websites. 2C2P payment gateway integrated for subscriptions and transactions.
+                        </p>
+                    </div>
+                    <div class="project-body">
+                        <div class="stacked-thumbs" role="group" aria-label="Properlly screenshots preview">
+                            <img src="project-screenshot/properlly/ss3.png" class="stacked-thumb" data-gallery-preview="properlly" data-index="2" alt="Screenshot 3" title="Screenshot 3" role="button" aria-label="Open screenshot 3 in Properlly gallery">
+                            <img src="project-screenshot/properlly/ss2.png" class="stacked-thumb" data-gallery-preview="properlly" data-index="1" alt="Screenshot 2" title="Screenshot 2" role="button" aria-label="Open screenshot 2 in Properlly gallery">
+                            <img src="project-screenshot/properlly/ss1.png" class="stacked-thumb" data-gallery-preview="properlly" data-index="0" alt="Screenshot 1" title="Screenshot 1" role="button" aria-label="Open screenshot 1 in Properlly gallery">
+                        </div>
+                        <a href="https://properlly-web-dev.azurewebsites.net/en/home" class="btn btn-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>Visit Website
+                        </a>
+                    </div>
                 </div>
 
-                <div class="project-card">
-                    <h3>ProperDee SaaS Platform</h3>
-                    <span class="project-meta">Full Stack / System Design</span>
-                    <p>
-                        Built a dual-site ecosystem: a public marketplace and an agent portal.
-                        Features include personalized subdomain websites for agents and 
-                        <strong>2C2P payment integration</strong>.
-                    </p>
+                <div class="project-card" id="proj-properdee">
+                    <div>
+                        <h3>ProperDee</h3>
+                        <span class="project-meta">Dual-site marketplace & agent portal</span>
+                        <p style="margin-top:0.5rem; color:var(--text-sub);">
+                            Built a dual-site ecosystem: a public marketplace (properdee.com) and an agent portal (properdeeagents.com) providing personalized subdomain websites, listing management, and automated document generation. Integrated 2C2P payment gateway for agent subscriptions.
+                        </p>
+                    </div>
+                    <div class="project-body">
+                        <div class="stacked-thumbs" role="group" aria-label="ProperDee screenshots preview">
+                            <img src="project-screenshot/properdee/ss3.png" class="stacked-thumb" data-gallery-preview="properdee" data-index="2" alt="Screenshot 3" title="Screenshot 3" role="button" aria-label="Open screenshot 3 in ProperDee gallery">
+                            <img src="project-screenshot/properdee/ss2.png" class="stacked-thumb" data-gallery-preview="properdee" data-index="1" alt="Screenshot 2" title="Screenshot 2" role="button" aria-label="Open screenshot 2 in ProperDee gallery">
+                            <img src="project-screenshot/properdee/ss1.png" class="stacked-thumb" data-gallery-preview="properdee" data-index="0" alt="Screenshot 1" title="Screenshot 1" role="button" aria-label="Open screenshot 1 in ProperDee gallery">
+                        </div>
+
+                        <div class="project-actions">
+                            <a href="https://properdee.com" class="btn btn-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Website
+                            </a>
+                            <a href="https://properdeeagents.com" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Agent Portal
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="project-card">
-                    <h3>Paris Travel Service</h3>
-                    <span class="project-meta">Founder / Content Strategy / Web Dev</span>
-                    <p>
-                        A dedicated travel service platform for visa and travel assistance. 
-                        Combines technical web infrastructure with targeted content strategies.
-                    </p>
+                <div class="project-card" id="proj-bahtsold">
+                    <div>
+                        <h3>Online Travel Booking Platforms</h3>
+                        <span class="project-meta">White-label Hotel Booking Engine</span>
+                        <p style="margin-top:0.5rem; color:var(--text-sub);">
+                            Developed three white-label hotel booking websites integrating Traveloka and Agoda RESTful APIs, with payment via Omise, secure booking workflows, and automated email notifications. Deployed across partner websites like Trip by Khaosod and Bahtsold Travel.
+                        </p>
+                    </div>
+                    <div class="project-body">
+                        <div class="stacked-thumbs" role="group" aria-label="Bahtsold screenshots preview">
+                            <img src="project-screenshot/bahtsold/ss3.png" class="stacked-thumb" data-gallery-preview="bahtsold" data-index="2" alt="Screenshot 3" title="Screenshot 3" role="button" aria-label="Open screenshot 3 in Bahtsold gallery">
+                            <img src="project-screenshot/bahtsold/ss2.png" class="stacked-thumb" data-gallery-preview="bahtsold" data-index="1" alt="Screenshot 2" title="Screenshot 2" role="button" aria-label="Open screenshot 2 in Bahtsold gallery">
+                            <img src="project-screenshot/bahtsold/ss1.png" class="stacked-thumb" data-gallery-preview="bahtsold" data-index="0" alt="Screenshot 1" title="Screenshot 1" role="button" aria-label="Open screenshot 1 in Bahtsold gallery">
+                        </div>
+
+                        <a href="https://travel.bahtsold.com/en" class="btn btn-link" target="_blank" rel="noopener noreferrer" aria-label="Visit Bahtsold website">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>Visit Website
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card" id="proj-gaia">
+                    <div>
+                        <h3>Gaia</h3>
+                        <span class="project-meta">Delphi modules for GAIA 10 civil estimating software</span>
+                        <p style="margin-top:0.5rem; color:var(--text-sub);">
+                            I developed and customized modules for the GAIA 10 civil engineering estimating software using Delphi. Working under the guidance of a team leader, I was responsible for implementing assigned features, extending existing functionality, and improving the usability of the system. My tasks included coding new modules, optimizing data handling and reporting processes, and performing debugging and testing to ensure software stability. Through this work, I gained hands-on experience with Delphi and contributed to delivering reliable solutions that improved efficiency and accuracy within the GAIA 10 platform.
+                        </p>
+                    </div>
+                    <div class="project-body">
+                        <div class="stacked-thumbs" role="group" aria-label="Gaia screenshots preview">
+                            <img src="project-screenshot/gaia/ss3.png" class="stacked-thumb" data-gallery-preview="gaia" data-index="2" alt="Screenshot 3" title="Screenshot 3" role="button" aria-label="Open screenshot 3 in Gaia gallery">
+                            <img src="project-screenshot/gaia/ss2.png" class="stacked-thumb" data-gallery-preview="gaia" data-index="1" alt="Screenshot 2" title="Screenshot 2" role="button" aria-label="Open screenshot 2 in Gaia gallery">
+                            <img src="project-screenshot/gaia/ss1.png" class="stacked-thumb" data-gallery-preview="gaia" data-index="0" alt="Screenshot 1" title="Screenshot 1" role="button" aria-label="Open screenshot 1 in Gaia gallery">
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://beingmyanmar.com/" class="btn btn-link" target="_blank" rel="noopener noreferrer" aria-label="Visit Being Myanmar website">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Website
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -383,21 +586,123 @@
                 <i class="fa-brands fa-linkedin" style="margin-right:0.5rem;" aria-hidden="true"></i>Visit LinkedIn
             </a>
         </div>
+
+        <div id="languages" class="section">
+            <h2>Languages</h2>
+            <div class="skills-grid">
+                <span class="skill-tag"><img src="country-flags/us.png" alt="US flag" class="flag"> English — Intermediate</span>
+                <span class="skill-tag"><img src="country-flags/jp.png" alt="Japan flag" class="flag"> Japanese — N4</span>
+                <span class="skill-tag"><img src="country-flags/mm.png" alt="Myanmar flag" class="flag"> Burmese — Native</span>
+            </div>
+        </div>
     </div>
 
     <footer>
         <p>&copy; <span id="year"></span> Nyan Lin Maung. All Rights Reserved.</p>
     </footer>
 
+    <!-- Gallery Modal for Profile Photo -->
+    <div id="gallery-profile" class="gallery-modal" aria-hidden="true" style="display:none;">
+        <div class="gallery-overlay" data-close></div>
+        <div class="gallery-content" role="dialog" aria-modal="true" aria-label="Profile photo">
+            <button class="close-btn" data-close aria-label="Close gallery">&times;</button>
+            <img src="images/profile.jpg" alt="Profile photo" class="gallery-main" id="gallery-main-profile">
+        </div>
+    </div>
+
+    <!-- Gallery Modal for Graduation Photo -->
+    <div id="gallery-graduated" class="gallery-modal" aria-hidden="true" style="display:none;">
+        <div class="gallery-overlay" data-close></div>
+        <div class="gallery-content" role="dialog" aria-modal="true" aria-label="Graduation photo">
+            <button class="close-btn" data-close aria-label="Close gallery">&times;</button>
+            <img src="images/gratuated.jpg" alt="Graduation photo" class="gallery-main" id="gallery-main-graduated">
+        </div>
+    </div>
+
+    <!-- Gallery Modal for Properlly Project -->
+    <div id="gallery-properlly" class="gallery-modal" aria-hidden="true" style="display:none;">
+        <div class="gallery-overlay" data-close></div>
+        <div class="gallery-content" role="dialog" aria-modal="true" aria-label="Properlly screenshots">
+            <button class="close-btn" data-close aria-label="Close gallery">&times;</button>
+            <img src="project-screenshot/properlly/ss1.png" alt="Properlly screenshot" class="gallery-main" id="gallery-main-properlly">
+            <div class="gallery-thumbs">
+                <img src="project-screenshot/properlly/ss1.png" data-src="project-screenshot/properlly/ss1.png" class="gallery-thumb" alt="Screenshot 1">
+                <img src="project-screenshot/properlly/ss2.png" data-src="project-screenshot/properlly/ss2.png" class="gallery-thumb" alt="Screenshot 2">
+                <img src="project-screenshot/properlly/ss3.png" data-src="project-screenshot/properlly/ss3.png" class="gallery-thumb" alt="Screenshot 3">
+            </div>
+            <button class="gallery-nav prev" aria-label="Previous">&#10094;</button>
+            <button class="gallery-nav next" aria-label="Next">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Gallery Modal for Bahtsold Project -->
+    <div id="gallery-bahtsold" class="gallery-modal" aria-hidden="true" style="display:none;">
+        <div class="gallery-overlay" data-close></div>
+        <div class="gallery-content" role="dialog" aria-modal="true" aria-label="Bahtsold screenshots">
+            <button class="close-btn" data-close aria-label="Close gallery">&times;</button>
+            <img src="project-screenshot/bahtsold/ss1.png" alt="Bahtsold screenshot" class="gallery-main" id="gallery-main-bahtsold">
+            <div class="gallery-thumbs">
+                <img src="project-screenshot/bahtsold/ss1.png" data-src="project-screenshot/bahtsold/ss1.png" class="gallery-thumb" alt="Screenshot 1">
+                <img src="project-screenshot/bahtsold/ss2.png" data-src="project-screenshot/bahtsold/ss2.png" class="gallery-thumb" alt="Screenshot 2">
+                <img src="project-screenshot/bahtsold/ss3.png" data-src="project-screenshot/bahtsold/ss3.png" class="gallery-thumb" alt="Screenshot 3">
+            </div>
+            <button class="gallery-nav prev" aria-label="Previous">&#10094;</button>
+            <button class="gallery-nav next" aria-label="Next">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Gallery Modal for Gaia Project -->
+    <div id="gallery-gaia" class="gallery-modal" aria-hidden="true" style="display:none;">
+        <div class="gallery-overlay" data-close></div>
+        <div class="gallery-content" role="dialog" aria-modal="true" aria-label="Gaia screenshots">
+            <button class="close-btn" data-close aria-label="Close gallery">&times;</button>
+            <img src="project-screenshot/gaia/ss1.png" alt="Gaia screenshot" class="gallery-main" id="gallery-main-gaia">
+            <div class="gallery-thumbs">
+                <img src="project-screenshot/gaia/ss1.png" data-src="project-screenshot/gaia/ss1.png" class="gallery-thumb" alt="Screenshot 1">
+                <img src="project-screenshot/gaia/ss2.png" data-src="project-screenshot/gaia/ss2.png" class="gallery-thumb" alt="Screenshot 2">
+                <img src="project-screenshot/gaia/ss3.png" data-src="project-screenshot/gaia/ss3.png" class="gallery-thumb" alt="Screenshot 3">
+            </div>
+            <button class="gallery-nav prev" aria-label="Previous">&#10094;</button>
+            <button class="gallery-nav next" aria-label="Next">&#10095;</button>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Gallery Modal for ProperDee Project -->
+    <div id="gallery-properdee" class="gallery-modal" aria-hidden="true" style="display:none;">
+        <div class="gallery-overlay" data-close></div>
+        <div class="gallery-content" role="dialog" aria-modal="true" aria-label="ProperDee screenshots">
+            <button class="close-btn" data-close aria-label="Close gallery">&times;</button>
+            <img src="project-screenshot/properdee/ss1.png" alt="ProperDee screenshot" class="gallery-main" id="gallery-main-properdee">
+            <div class="gallery-thumbs">
+                <img src="project-screenshot/properdee/ss1.png" data-src="project-screenshot/properdee/ss1.png" class="gallery-thumb" alt="Screenshot 1">
+                <img src="project-screenshot/properdee/ss2.png" data-src="project-screenshot/properdee/ss2.png" class="gallery-thumb" alt="Screenshot 2">
+                <img src="project-screenshot/properdee/ss3.png" data-src="project-screenshot/properdee/ss3.png" class="gallery-thumb" alt="Screenshot 3">
+            </div>
+            <button class="gallery-nav prev" aria-label="Previous">&#10094;</button>
+            <button class="gallery-nav next" aria-label="Next">&#10095;</button>
+        </div>
+    </div>
+
     <script>
         // Theme Toggle Logic
         const toggleButton = document.getElementById('theme-toggle');
         const body = document.body;
-        const currentTheme = localStorage.getItem('theme');
+        let currentTheme = localStorage.getItem('theme');
         
+        // Default to light mode when no preference is stored
         if (currentTheme === 'dark') {
             body.classList.add('dark-mode');
             toggleButton.textContent = '☀️';
+        } else {
+            // Ensure light mode by default and persist it if missing
+            body.classList.remove('dark-mode');
+            toggleButton.textContent = '🌙';
+            if (currentTheme === null) {
+                localStorage.setItem('theme', 'light');
+                currentTheme = 'light';
+            }
         }
 
         toggleButton.addEventListener('click', () => {
@@ -409,6 +714,257 @@
 
         // Set Current Year
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Properlly Gallery Logic
+        (function() {
+            const openEls = document.querySelectorAll('[data-gallery-preview="properlly"]');
+            const modal = document.getElementById('gallery-properlly');
+            if (!modal) return;
+            const overlay = modal.querySelector('.gallery-overlay');
+            const closeEls = modal.querySelectorAll('[data-close]');
+            const mainImg = document.getElementById('gallery-main-properlly');
+            const thumbs = modal.querySelectorAll('.gallery-thumb');
+            const prevBtn = modal.querySelector('.gallery-nav.prev');
+            const nextBtn = modal.querySelector('.gallery-nav.next');
+            let current = 0;
+            const images = Array.from(thumbs).map(t => t.dataset.src);
+
+            function open(index = 0) {
+                current = index;
+                mainImg.src = images[current];
+                thumbs.forEach((t,i)=> t.classList.toggle('thumb-active', i === current));
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden','false');
+            }
+            function close() {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden','true');
+            }
+            function next() { open((current + 1) % images.length); }
+            function prev() { open((current - 1 + images.length) % images.length); }
+
+            openEls.forEach(el => {
+                el.addEventListener('click', (e) => { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); });
+                el.setAttribute('tabindex', '0');
+                el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); } });
+            });
+            closeEls.forEach(el => el.addEventListener('click', close));
+            overlay.addEventListener('click', close);
+            nextBtn.addEventListener('click', next);
+            prevBtn.addEventListener('click', prev);
+            thumbs.forEach((t,i)=> t.addEventListener('click', ()=> open(i)));
+            document.addEventListener('keydown', (e)=> {
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'Escape') close();
+                    if (e.key === 'ArrowRight') next();
+                    if (e.key === 'ArrowLeft') prev();
+                }
+            });
+        })();
+
+        // Bahtsold Gallery Logic
+        (function() {
+            const openEls = document.querySelectorAll('[data-gallery-preview="bahtsold"]');
+            const modal = document.getElementById('gallery-bahtsold');
+            if (!modal) return;
+            const overlay = modal.querySelector('.gallery-overlay');
+            const closeEls = modal.querySelectorAll('[data-close]');
+            const mainImg = document.getElementById('gallery-main-bahtsold');
+            const thumbs = modal.querySelectorAll('.gallery-thumb');
+            const prevBtn = modal.querySelector('.gallery-nav.prev');
+            const nextBtn = modal.querySelector('.gallery-nav.next');
+            let current = 0;
+            const images = Array.from(thumbs).map(t => t.dataset.src);
+
+            function open(index = 0) {
+                current = index;
+                mainImg.src = images[current];
+                thumbs.forEach((t,i)=> t.classList.toggle('thumb-active', i === current));
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden','false');
+            }
+            function close() {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden','true');
+            }
+            function next() { open((current + 1) % images.length); }
+            function prev() { open((current - 1 + images.length) % images.length); }
+
+            openEls.forEach(el => {
+                el.addEventListener('click', (e) => { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); });
+                el.setAttribute('tabindex', '0');
+                el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); } });
+            });
+            closeEls.forEach(el => el.addEventListener('click', close));
+            overlay.addEventListener('click', close);
+            nextBtn.addEventListener('click', next);
+            prevBtn.addEventListener('click', prev);
+            thumbs.forEach((t,i)=> t.addEventListener('click', ()=> open(i)));
+            document.addEventListener('keydown', (e)=> {
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'Escape') close();
+                    if (e.key === 'ArrowRight') next();
+                    if (e.key === 'ArrowLeft') prev();
+                }
+            });
+        })();
+
+        // ProperDee Gallery Logic
+        (function() {
+            const openEls = document.querySelectorAll('[data-gallery-preview="properdee"]');
+            const modal = document.getElementById('gallery-properdee');
+            if (!modal) return;
+            const overlay = modal.querySelector('.gallery-overlay');
+            const closeEls = modal.querySelectorAll('[data-close]');
+            const mainImg = document.getElementById('gallery-main-properdee');
+            const thumbs = modal.querySelectorAll('.gallery-thumb');
+            const prevBtn = modal.querySelector('.gallery-nav.prev');
+            const nextBtn = modal.querySelector('.gallery-nav.next');
+            let current = 0;
+            const images = Array.from(thumbs).map(t => t.dataset.src);
+
+            function open(index = 0) {
+                current = index;
+                mainImg.src = images[current];
+                thumbs.forEach((t,i)=> t.classList.toggle('thumb-active', i === current));
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden','false');
+            }
+            function close() {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden','true');
+            }
+            function next() { open((current + 1) % images.length); }
+            function prev() { open((current - 1 + images.length) % images.length); }
+
+            openEls.forEach(el => {
+                el.addEventListener('click', (e) => { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); });
+                el.setAttribute('tabindex', '0');
+                el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); } });
+            });
+            closeEls.forEach(el => el.addEventListener('click', close));
+            overlay.addEventListener('click', close);
+            nextBtn.addEventListener('click', next);
+            prevBtn.addEventListener('click', prev);
+            thumbs.forEach((t,i)=> t.addEventListener('click', ()=> open(i)));
+            document.addEventListener('keydown', (e)=> {
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'Escape') close();
+                    if (e.key === 'ArrowRight') next();
+                    if (e.key === 'ArrowLeft') prev();
+                }
+            });
+        })();
+
+        // Gaia Gallery Logic
+        (function() {
+            const openEls = document.querySelectorAll('[data-gallery-preview="gaia"]');
+            const modal = document.getElementById('gallery-gaia');
+            if (!modal) return;
+            const overlay = modal.querySelector('.gallery-overlay');
+            const closeEls = modal.querySelectorAll('[data-close]');
+            const mainImg = document.getElementById('gallery-main-gaia');
+            const thumbs = modal.querySelectorAll('.gallery-thumb');
+            const prevBtn = modal.querySelector('.gallery-nav.prev');
+            const nextBtn = modal.querySelector('.gallery-nav.next');
+            let current = 0;
+            const images = Array.from(thumbs).map(t => t.dataset.src);
+
+            function open(index = 0) {
+                current = index;
+                mainImg.src = images[current];
+                thumbs.forEach((t,i)=> t.classList.toggle('thumb-active', i === current));
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden','false');
+            }
+            function close() {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden','true');
+            }
+            function next() { open((current + 1) % images.length); }
+            function prev() { open((current - 1 + images.length) % images.length); }
+
+            openEls.forEach(el => {
+                el.addEventListener('click', (e) => { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); });
+                el.setAttribute('tabindex', '0');
+                el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const idx = el.dataset.index ? parseInt(el.dataset.index, 10) : 0; open(idx); } });
+            });
+            closeEls.forEach(el => el.addEventListener('click', close));
+            overlay.addEventListener('click', close);
+            nextBtn.addEventListener('click', next);
+            prevBtn.addEventListener('click', prev);
+            thumbs.forEach((t,i)=> t.addEventListener('click', ()=> open(i)));
+            document.addEventListener('keydown', (e)=> {
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'Escape') close();
+                    if (e.key === 'ArrowRight') next();
+                    if (e.key === 'ArrowLeft') prev();
+                }
+            });
+        })();
+
+
+
+
+
+
+
+    </script>
+
+    <script>
+        // Profile Photo Modal Logic
+        (function() {
+            const profileImg = document.querySelector('.profile-img');
+            const modal = document.getElementById('gallery-profile');
+            if (!profileImg || !modal) return;
+            const overlay = modal.querySelector('.gallery-overlay');
+            const closeEls = modal.querySelectorAll('[data-close]');
+            const mainImg = document.getElementById('gallery-main-profile');
+
+            function open() {
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden', 'false');
+            }
+            function close() {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden', 'true');
+            }
+
+            profileImg.addEventListener('click', (e) => { e.preventDefault(); open(); });
+            profileImg.setAttribute('tabindex', '0');
+            profileImg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+
+            closeEls.forEach(el => el.addEventListener('click', close));
+            overlay.addEventListener('click', close);
+            document.addEventListener('keydown', (e) => { if (modal.style.display === 'flex' && e.key === 'Escape') close(); });
+        })();
+
+        // Graduation Photo Modal Logic
+        (function() {
+            const gradImg = document.querySelector('.grad-img');
+            const modal = document.getElementById('gallery-graduated');
+            if (!gradImg || !modal) return;
+            const overlay = modal.querySelector('.gallery-overlay');
+            const closeEls = modal.querySelectorAll('[data-close]');
+            const mainImg = document.getElementById('gallery-main-graduated');
+
+            function open() {
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden', 'false');
+            }
+            function close() {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden', 'true');
+            }
+
+            gradImg.addEventListener('click', (e) => { e.preventDefault(); open(); });
+            gradImg.setAttribute('tabindex', '0');
+            gradImg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+
+            closeEls.forEach(el => el.addEventListener('click', close));
+            overlay.addEventListener('click', close);
+            document.addEventListener('keydown', (e) => { if (modal.style.display === 'flex' && e.key === 'Escape') close(); });
+        })();
     </script>
 
 </body>
